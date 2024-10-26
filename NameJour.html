@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Jour de la Semaine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #f94144;
+            margin: 0;
+            margin-bottom: 50px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            outline: none;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+        input:focus {
+            border-color: #f94144;
+            color: #333;
+        }
+        button {
+            background-color: #43aa8b;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: 0.3s;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        .result {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .day-box {
+            color: #000;
+            border: 1.5px solid #000;
+            border-radius: 15px;
+            font-size: 17px;
+            padding: 30px;
+            margin: 5px;
+            width: 70px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .highlight {
+            background-color: #f94144;
+            color: #fff;
+            transform: scale(1.2);
+            border-color: #f94144;
+            font-weight: bold;
+        }
+        .background-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.1;
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-icons">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+        <img src="https://img.icons8.com/material-outlined/80/ffffff/calendar-2.png" class="icon" alt="Calendar Icon">
+    </div>
+    
+    <div class="container">
+        <h1>Quel jour ?</h1>
+        <div class="input-group">
+            <input type="number" id="day" placeholder="Jour" min="1" max="31" required>
+            <input type="number" id="month" placeholder="Mois" min="1" max="12" required>
+            <input type="number" id="year" placeholder="Année" required>
+        </div>
+        <button onclick="calculateDay()">Calculer</button>
+    </div>
+    
+    <div id="result" class="result">
+        <div class="day-box">Dimanche</div>
+        <div class="day-box">Lundi</div>
+        <div class="day-box">Mardi</div>
+        <div class="day-box">Mercredi</div>
+        <div class="day-box">Jeudi</div>
+        <div class="day-box">Vendredi</div>
+        <div class="day-box">Samedi</div>
+    </div>
+
+    <script>
+        function calculateDay() {
+            const day = parseInt(document.getElementById('day').value);
+            const month = parseInt(document.getElementById('month').value);
+            const year = parseInt(document.getElementById('year').value);
+            
+            if (!day || !month || !year) {
+                alert("Veuillez entrer une date valide.");
+                return;
+            }
+            
+            const date = new Date(year, month - 1, day);
+            const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+            const dayName = days[date.getDay()];
+            
+            const resultDiv = document.getElementById('result');
+            const dayBoxes = document.querySelectorAll('.day-box');
+
+            dayBoxes.forEach(box => {
+                box.classList.remove('highlight');
+                if (box.innerText === dayName) {
+                    box.classList.add('highlight');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
